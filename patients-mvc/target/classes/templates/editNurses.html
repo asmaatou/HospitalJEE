@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template1">
+<head>
+    <meta charset="UTF-8">
+    <title>Nurses Edit Form</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.1.3/css/bootstrap.min.css">
+</head>
+<body>
+<div layout:fragment="content1">
+    <div class="container mt-2">
+        <div class="card">
+            <div class="card-header">Edit Nurse</div>
+            <div class="card-body">
+                <div class="col-md-6 offset-3">
+                    <form class="row g-3" method="post" th:action="@{/admin/save2(page=${page},keyword=${keyword})}">
+                        <div>
+                            <input class="form-control" type="hidden" name="id" th:value="${nurse.id}">
+                        </div>
+                        <div>
+                            <label>Name</label>
+                            <input class="form-control" type="text" name="nom" th:value="${nurse.nom}">
+                            <span class="text-danger" th:errors="${nurse.nom}"></span>
+                        </div>
+                        <div>
+                            <label>Specialty</label>
+                            <input class="form-control" type="text" name="specialite" th:value="${nurse.specialite}">
+                            <span class="text-danger" th:errors="${nurse.specialite}"></span>
+                        </div>
+                        <div>
+                            <label>BirthDate</label>
+                            <input class="form-control" type="date" name="dateNaissance" th:value="${nurse.dateNaissance}">
+                            <span th:errors="${nurse.dateNaissance}"></span>
+                        </div>
+                        <div>
+                            <label>Email</label>
+                            <input class="form-control" type="email" name="email" th:value="${nurse.email}">
+                            <span th:errors="${nurse.email}"></span>
+                        </div>
+                        <div>
+                            <label>Phone Number</label>
+                            <input class="form-control" type="tel" name="numeroTelephone" th:value="${nurse.numeroTelephone}">
+                            <span th:errors="${nurse.numeroTelephone}"></span>
+                        </div>
+                        <div>
+                            <label>Adress</label>
+                            <input class="form-control" type="text" name="adresse" th:value="${nurse.adresse}">
+                            <span th:errors="${nurse.adresse}"></span>
+                        </div>
+
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-secondary">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

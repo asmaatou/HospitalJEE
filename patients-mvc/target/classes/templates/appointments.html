@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="template1">
+<head>
+    <meta charset="UTF-8">
+    <title>HomePage - Patients</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/5.1.3/css/bootstrap.min.css">
+    <script src="/webjars/bootstrap/5.1.3/js/bootstrap.bundle.js"></script>
+
+</head>
+<body>
+<div layout:fragment="content1">
+    <div class="container mt-2">
+        <div class="card">
+            <div class="card-header">Appointments List</div>
+            <div class="card-body">
+                <form  class="input-group mb-3" method="get" th:action="@{/user/index3}" >
+                    <input class="form-control" type="text"name="keyword" placeholder="Enter Value" th:value="${keyword}">
+                    <button type="submit" class="btn btn-secondary" id="button-addon2" >Search</button>
+                </form>
+                <div sec:authorize="hasAuthority('ADMIN')" >
+                    <a class="btn btn-primary" th:href="@{/admin/formAppointments}">
+                        Add Appointment</a>
+                </div>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>ID</th><th>Patient Name</th><th>Doctor Name</th><th>Appointment Hour</th><th>Appointment Date</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="a:${listAppointments}">
+                        <td th:text="${a.id}"></td>
+                        <td th:text="${a.patientname}"></td>
+                        <td th:text="${a.doctorname}"></td>
+                        <td th:text="${a.hour}"></td>
+                        <td th:text="${a.day}"></td>
+                        <td sec:authorize="hasAuthority('ADMIN')">
+                            <a class="btn btn-success" th:href="@{/admin/editAppointment(id=${a.id}, keyword=${keyword},page=${currentPage})}">
+                                Edit</a>
+                        </td>
+                        <td sec:authorize="hasAuthority('ADMIN')">
+                            <a onclick="return confirm('Etes vous sure ?')" class="btn btn-danger" th:href="@{/admin/delete3(id=${a.id}, keyword=${keyword},page=${currentPage})}">
+                                Delete</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <ul class="nav nav-pills">
+                    <li th:each="page,status:${pages}">
+                        <a th:class="${status.index==currentPage?'btn btn-info ms-1':'btn btn-outline-secondary ms-1'}"
+                           th:text="${status.index}"
+                           th:href="@{/user/index3(page=${status.index},keyword=${keyword})}"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
